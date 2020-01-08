@@ -1,5 +1,7 @@
 package graphalgorithms;
 
+import model.Connection;
+import model.Line;
 import model.Station;
 import model.TransportGraph;
 
@@ -30,6 +32,8 @@ public abstract class AbstractPathSearch {
         nodesVisited = new ArrayList<>();
         marked = new boolean[graph.getNumberOfStations()];
         edgeTo = new int[graph.getNumberOfStations()];
+        nodesInPath = new LinkedList();
+        verticesInPath = new LinkedList();
     }
 
     public abstract void search();
@@ -48,10 +52,23 @@ public abstract class AbstractPathSearch {
      * First the LinkedList verticesInPath, containing the indexes of the stations, should be build, used as a stack
      * Then the list nodesInPath containing the actual stations is build.
      * Also the number of transfers is counted.
+     *
      * @param vertex The station (vertex) as an index
      */
     public void pathTo(int vertex) {
-        // TODO
+        if (!hasPathTo(vertex)) return;
+
+        for (int v = vertex; v != startIndex; v = edgeTo[v]) {
+            verticesInPath.push(v);
+        }
+
+        verticesInPath.addFirst(startIndex);
+
+        for (Integer v : verticesInPath) {
+            nodesInPath.add(graph.getStation(v));
+        }
+
+        countTransfers();
     }
 
     /**
@@ -60,7 +77,17 @@ public abstract class AbstractPathSearch {
      * If to consecutive connections are on different lines there was a transfer.
      */
     public void countTransfers() {
-        // TODO
+        if (verticesInPath.size() <= 1) {
+            return;
+        }
+
+        Line currentLine = graph.getStation(endIndex).getCommonLine(graph.getStation(edgeTo[endIndex]));
+        for (int v = endIndex; v != startIndex; v = edgeTo[v]) {
+            if (!currentLine.getStationsOnLine().contains(graph.getStation(edgeTo[v]))) {
+                currentLine = graph.getStation(v).getCommonLine(graph.getStation(edgeTo[v]));
+                transfers++;
+            }
+        }
     }
 
 
