@@ -46,7 +46,7 @@ public class TransportGraphLauncher {
         bfsTest.printNodesInVisitedOrder();
 
         // A - 5
-        System.out.println("\nOerview of all the path from all stations to all other stations with the least connections:");
+        System.out.println("\nOverview of all the paths from all stations to all other stations with the least connections:");
         System.out.println("-----------------------------------------------");
 
         for (Station s : transportGraph.getStationList()) {
