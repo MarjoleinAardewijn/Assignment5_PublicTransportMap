@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2447db32-1655-46d4-8bec-7df35db6eef0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/DijkstraShortestPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PublicTransportMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PublicTransportMap.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/graphalgorithms/AbstractPathSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/TransportGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/IndexMinPQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/IndexMinPQ.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+            <state relative-caret-position="775">
+              <caret line="130" column="9" selection-start-line="130" selection-start-column="9" selection-end-line="130" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -233,12 +225,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1578662513543</updated>
-      <workItem from="1578662514971" duration="4326000" />
+      <workItem from="1578662514971" duration="4536000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4326000" />
+    <option name="totallyTimeSpent" value="4536000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="824" y="23" width="1405" height="1519" extended-state="0" />
@@ -326,8 +318,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/controller/TransportGraphLauncher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+        <state relative-caret-position="775">
+          <caret line="130" column="9" selection-start-line="130" selection-start-column="9" selection-end-line="130" selection-end-column="9" />
         </state>
       </provider>
     </entry>
