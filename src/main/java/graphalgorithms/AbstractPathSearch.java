@@ -97,7 +97,9 @@ public abstract class AbstractPathSearch {
     public void printNodesInVisitedOrder() {
         System.out.print("Nodes in visited order: ");
         for (Station vertex : nodesVisited) {
-            System.out.print(vertex.getStationName() + " ");
+            // Show arrows between vertexes
+            System.out.print(vertex.getStationName()
+                    + (nodesVisited.indexOf(vertex) != nodesVisited.size() - 1 ? " -> " : ""));
         }
         System.out.println();
     }

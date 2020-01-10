@@ -117,11 +117,13 @@ public class TransportGraph {
         private Set<Station> stationSet;
         private List<Line> lineList;
         private Set<Connection> connectionSet;
+        private Map<Line, double[]> weightSet;
 
         public Builder() {
             lineList = new ArrayList<>();
             stationSet = new HashSet<>();
             connectionSet = new HashSet<>();
+            weightSet = new HashMap<>();
         }
 
         /**
@@ -132,11 +134,30 @@ public class TransportGraph {
          * @return
          */
         public Builder addLine(String[] lineDefinition) {
+            addLine(lineDefinition, null);
+            return this;
+        }
+
+        /**
+         * Method to add a line to the list of lines and add stations to the line.
+         * This method also adds the weight of the line to the scope's weightSet's variable
+         *
+         * @param lineDefinition String array that defines the line. The array should start with the name of the line,
+         *                       followed by the type of the line and the stations on the line in order.
+         * @return
+         */
+        public Builder addLine(String[] lineDefinition, double[] weight) {
             Line line = new Line(lineDefinition[1], lineDefinition[0]);
             for (int i = 2; i < lineDefinition.length; i++) {
                 line.addStation(new Station(lineDefinition[i]));
             }
             lineList.add(line);
+
+            // If a weight has been set, then add it to the weightSet list.
+            if (weight != null && weight.length > 0) {
+                weightSet.put(line, weight);
+            }
+
             return this;
         }
 
@@ -180,7 +201,12 @@ public class TransportGraph {
         public Builder buildConnections() {
             for (Line line : lineList) {
                 for (int i = 0; i < line.getStationsOnLine().size() - 1; i++) {
-                    connectionSet.add(new Connection(line.getStationsOnLine().get(i), line.getStationsOnLine().get(i + 1)));
+                    final Connection connection = new Connection(line.getStationsOnLine().get(i), line.getStationsOnLine().get(i + 1));
+                    if (weightSet.containsKey(line)) {
+                        connection.setWeight(weightSet.containsKey(line) ? weightSet.get(line)[i] : 0);
+                        connection.setLine(line);
+                    }
+                    connectionSet.add(connection);
                 }
             }
             return this;
