@@ -17,6 +17,7 @@ public class BreadthFirstPath extends AbstractPathSearch {
         Queue<Integer> queue = new LinkedList<Integer>();
         queue.add(startIndex);
         marked[startIndex] = true;
+        edgeTo[startIndex] = -1;
         nodesVisited.add(graph.getStation(startIndex));
 
         while (queue.size() != 0) {

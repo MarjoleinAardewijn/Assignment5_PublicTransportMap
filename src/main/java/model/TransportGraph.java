@@ -118,12 +118,14 @@ public class TransportGraph {
         private List<Line> lineList;
         private Set<Connection> connectionSet;
         private Map<Line, double[]> weightSet;
+        private Map<String, Location> locationSet;
 
         public Builder() {
             lineList = new ArrayList<>();
             stationSet = new HashSet<>();
             connectionSet = new HashSet<>();
             weightSet = new HashMap<>();
+            locationSet = new HashMap<>();
         }
 
         /**
@@ -147,9 +149,31 @@ public class TransportGraph {
          * @return
          */
         public Builder addLine(String[] lineDefinition, double[] weight) {
+            addLine(lineDefinition, weight, null);
+            return this;
+        }
+
+        /**
+         * Method to add a line to the list of lines and add stations to the line.
+         * This method also adds the weight of the line to the scope's weightSet's variable
+         *
+         * @param lineDefinition String array that defines the line. The array should start with the name of the line,
+         *                       followed by the type of the line and the stations on the line in order.
+         * @return
+         */
+        public Builder addLine(String[] lineDefinition, double[] weight, int[] locations) {
             Line line = new Line(lineDefinition[1], lineDefinition[0]);
+            int locationIndex = 0;
             for (int i = 2; i < lineDefinition.length; i++) {
-                line.addStation(new Station(lineDefinition[i]));
+                // Replaces spaces in the string to fix the transfer calculation.
+                Station station = new Station(lineDefinition[i].replace(" ", "_"));
+                line.addStation(station);
+
+                // If the locations have been set, then add it to the locations.
+                if (locations != null && locations.length > 0) {
+                    station.setLocation(new Location(locations[locationIndex++], locations[locationIndex++]));
+                    System.out.println("Adding: " + locations.length + " locations to line: " + line.toString() + ", with location: " + station.getLocation());
+                }
             }
             lineList.add(line);
 
@@ -157,20 +181,24 @@ public class TransportGraph {
             if (weight != null && weight.length > 0) {
                 weightSet.put(line, weight);
             }
-
             return this;
         }
-
 
         /**
          * Method that reads all the lines and their stations to build a set of stations.
          * Stations that are on more than one line will only appear once in the set.
+         * If the station list contains the station name, it adds the location to the station.
          *
          * @return
          */
         public Builder buildStationSet() {
             for (Line line : lineList) {
-                stationSet.addAll(line.getStationsOnLine());
+                for (Station station : line.getStationsOnLine()) {
+                    if (locationSet.containsKey(station.getStationName())) {
+                        station.setLocation(locationSet.get(station.getStationName()));
+                    }
+                    this.stationSet.add(station);
+                }
             }
             return this;
         }

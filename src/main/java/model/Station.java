@@ -7,10 +7,16 @@ public class Station {
 
     private String stationName;
     private Set<Line> lines;
+    private Location location;
 
     public Station(String nodeName) {
         this.stationName = nodeName;
         lines = new HashSet<>();
+    }
+
+    public Station(String nodeName, Location loc){
+        this(nodeName);
+        this.location = loc;
     }
 
     public void addLine(Line line) {
@@ -23,6 +29,14 @@ public class Station {
 
     public Set<Line> getLines() {
         return lines;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     /**

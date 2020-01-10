@@ -1,15 +1,13 @@
 package graphalgorithms;
 
-import model.Connection;
-import model.IndexMinPQ;
-import model.TransportGraph;
+import model.*;
 
-public class DijkstraShortestPath extends AbstractPathSearch {
+public class A_Star extends AbstractPathSearch {
 
     private IndexMinPQ<Double> queue;
     private double[] distTo;
 
-    public DijkstraShortestPath(TransportGraph graph, String start, String end) {
+    public A_Star(TransportGraph graph, String start, String end) {
         super(graph, start, end);
 
         queue = new IndexMinPQ<>(graph.getNumberOfStations());
@@ -36,7 +34,9 @@ public class DijkstraShortestPath extends AbstractPathSearch {
             for (Integer i : graph.getAdjacentVertices(current)) {
 
                 Connection connection = graph.getConnection(current, i);
-                if (distTo[i] > (distTo[current] + connection.getWeight())) {
+
+                double travelTime = getTravelTime(i);
+                if ((distTo[i] + travelTime) > (distTo[current] + connection.getWeight() + travelTime)) {
 
                     // Add the connection and weight
                     distTo[i] = distTo[current] + connection.getWeight();
@@ -45,14 +45,18 @@ public class DijkstraShortestPath extends AbstractPathSearch {
                     edgeTo[i] = current;
 
                     if (queue.contains(i)) {
-                        queue.decreaseKey(i, distTo[i]);
+                        queue.decreaseKey(i, distTo[i] + travelTime);
                     } else {
-                        queue.insert(i, distTo[i]);
+                        queue.insert(i, distTo[i] + travelTime);
                     }
                 }
             }
         }
         pathTo(endIndex);
+    }
+
+    private double getTravelTime(int stationIndex) {
+        return graph.getStation(stationIndex).getLocation().travelTime(graph.getStation(endIndex).getLocation());
     }
 
     /**

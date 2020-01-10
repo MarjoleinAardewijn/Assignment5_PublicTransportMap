@@ -58,11 +58,14 @@ public abstract class AbstractPathSearch {
     public void pathTo(int vertex) {
         if (!hasPathTo(vertex)) return;
 
-        for (int v = vertex; v != startIndex; v = edgeTo[v]) {
-            verticesInPath.push(v);
-        }
+        verticesInPath = new LinkedList<>();
+        nodesInPath = new LinkedList<>();
 
-        verticesInPath.addFirst(startIndex);
+        int i = vertex;
+        while (i != -1){
+            verticesInPath.addFirst(i);
+            i = edgeTo[i];
+        }
 
         for (Integer v : verticesInPath) {
             nodesInPath.add(graph.getStation(v));
@@ -90,6 +93,10 @@ public abstract class AbstractPathSearch {
         }
     }
 
+    public int countVertices() {
+        return nodesVisited.size();
+    }
+
 
     /**
      * Method to print all the nodes that are visited by the search algorithm implemented in one of the subclasses.
@@ -109,6 +116,14 @@ public abstract class AbstractPathSearch {
         StringBuilder resultString = new StringBuilder(String.format("Path from %s to %s: ", graph.getStation(startIndex), graph.getStation(endIndex)));
         resultString.append(nodesInPath).append(" with " + transfers).append(" transfers");
         return resultString.toString();
+    }
+
+    public double getTotalWeight() {
+        double weight = 0;
+        for (int i = 0; i < verticesInPath.size() - 1; i++) {
+            weight += graph.getConnection(verticesInPath.get(i), verticesInPath.get(i + 1)).getWeight();
+        }
+        return weight;
     }
 
 }

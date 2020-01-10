@@ -16,6 +16,7 @@ public class DepthFirstPath extends AbstractPathSearch {
     private void depthFirstSearch(int vertex) {
         if (marked[vertex]) return;
 
+        edgeTo[vertex] = -1;
         marked[vertex] = true;
 
         for (int a : graph.getAdjacentVertices(vertex)) {
